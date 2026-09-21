@@ -1,0 +1,123 @@
+100 DAYS OF CODE - W/O AI
+
+DAY - 01
+
+React
+
+1. Components - React applications are made up of components; they r the piece of UI which has its own logic and appearance
+function Button(){
+return (
+<>
+<button> Hello </button>
+</>
+)
+}
+
+2. Props + State + Event
+
+MyApp
+ │
+ │ props
+ ├───────────────→ MyButton
+ │                  │
+ │                  ├── count
+ │                  └── onClick
+ │
+ └── state
+      count
+
+import {useState} from 'react';
+
+export default function MyApp(){
+  const [count, setCount] = useState(0);
+  function handleClick(){
+    setCount(count + 1);
+  }
+  return (
+    <>
+    <MyButton count={count} onClick={handleClick} />
+    </>
+  )
+}
+
+
+function MyButton({count, onClick}){
+  return (
+    <>
+    <button onClick={onClick}> The button is pressed {count} times !! </button>
+    </>
+  )
+}
+
+3. State is data that a component remembers between renders. When state changes, React re-renders the component so the UI can reflect the new value.
+
+4. Hooks are used for make changes in all the child components
+Hooks are special React functions that let function components use React features such as state and effects.
+
+5. JSX
+JSX is a syntax extension for JavaScript that allows us to write markup-like UI inside JavaScript.
+
+Component
+    ↓
+UI + Logic
+
+State
+    ↓
+Data component remembers
+
+Event
+    ↓
+User interaction
+
+setState
+    ↓
+Update state
+    ↓
+Re-render
+    ↓
+Updated UI
+
+Props
+    ↓
+Parent → Child data/behavior
+
+JSX
+    ↓
+Describe what UI should look like
+
+6. Vite is a fast frontend build tool and development server commonly used with React. It provides fast development with features like instant module updates and bundles the application for production.
+
+Build
+
+┌─────────────────────────────────────┐
+│          COUNTER DASHBOARD          │
+│                                     │
+│               12                    │
+│                                     │
+│          [ − ]   [ + ]              │
+│                                     │
+│             [ RESET ]               │
+│                                     │
+├─────────────────────────────────────┤
+│               STATS                 │
+│                                     │
+│  Status          Positive           │
+│  Parity          Even               │
+│  Doubled         24                 │
+│  Squared         144                │
+│                                     │
+├─────────────────────────────────────┤
+│              HISTORY                │
+│                                     │
+│        12 → 11 → 12 → 13 → 12       │
+│                                     │
+└─────────────────────────────────────┘
+
+React
+→ UI library for building the application
+
+Vite
+→ Development server + build tool for the application
+
+Browser
+→ Runs the resulting application
