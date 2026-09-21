@@ -1,0 +1,54 @@
+Ok so It was like there will be only one page wont complicate it in that page at top right will be a add product button from which I would add product see insted of form i thought to keep ot as alert for simple thing and then the things that r retrieved from that will later make product card from that
+
+┌──────────────────────────────────────────────────────────────┐
+│  Product Catalog                              [+ Add Product] │
+│  Manage your products                                        │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  Search products...                  All Categories ▾         │
+│                                                              │
+│  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐   │
+│  │               │  │               │  │               │   │
+│  │    IMAGE      │  │    IMAGE      │  │    IMAGE      │   │
+│  │               │  │               │  │               │   │
+│  ├───────────────┤  ├───────────────┤  ├───────────────┤   │
+│  │ Laptop        │  │ Headphones    │  │ Keyboard      │   │
+│  │ Electronics   │  │ Audio         │  │ Accessories   │   │
+│  │ ₹50,000       │  │ ₹2,500        │  │ ₹1,800        │   │
+│  │          Edit │  │          Edit │  │          Edit │   │
+│  └───────────────┘  └───────────────┘  └───────────────┘   │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+
+             ┌─────────────────────────────┐
+             │       Add New Product     X  │
+             │                             │
+             │ Product Name                │
+             │ [_________________________] │
+             │                             │
+             │ Price                       │
+             │ [_________________________] │
+             │                             │
+             │ Category                    │
+             │ [_________________________] │
+             │                             │
+             │ Image URL                   │
+             │ [_________________________] │
+             │                             │
+             │        [ Add Product ]       │
+             └─────────────────────────────┘
+
+
+Use of Modal 
+In form use of onSubmit to handle all the submit related stuff
+Later on onSubmit() we have event.preventDefualt() used to stop form from reloading itself 
+Code to convert form data into object
+
+const handSubmit = (event) => {
+event.preventDefault() // prevents page from restarting
+let form = event.target // Give the entire form tag
+let formData = new FormData(form) //Retrieve data from form
+let formDataObj = Object.formEntries(formData.entries())
+}
+
+Hey uk what got the mental picture of the form stuff using modal so it will be true visible on clicking add cart later form will appear will fetch data from form also removes out from the modal by clicking on form suibmoit using onSubmit() hence in this way I will be getting form data in form of objct later will be storing it in my array along with oither product object and will later need to figire out regarding displaying them prbly will use .map() func one thing Ig our form will refresh and reload every timw we will load the new stuff
