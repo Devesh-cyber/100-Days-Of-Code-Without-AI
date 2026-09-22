@@ -21,7 +21,7 @@ Ok so It was like there will be only one page wont complicate it in that page at
 └──────────────────────────────────────────────────────────────┘
 
              ┌─────────────────────────────┐
-             │       Add New Product     X  │
+             │       Add New Product     X │
              │                             │
              │ Product Name                │
              │ [_________________________] │
@@ -35,7 +35,7 @@ Ok so It was like there will be only one page wont complicate it in that page at
              │ Image URL                   │
              │ [_________________________] │
              │                             │
-             │        [ Add Product ]       │
+             │        [ Add Product ]      │
              └─────────────────────────────┘
 
 
