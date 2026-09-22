@@ -74,7 +74,14 @@ function Modal({ onAddProducts }) {
                 <button className="submit-product-btn" type="submit">
                     Add Product
                 </button>
-            </form>
+                <button
+                    type="button"
+                    className="close-modal-btn"
+                    onClick={() => setIsActive(false)}
+                >
+                    ×
+                </button>
+        </form>
         </div>
     )
 
