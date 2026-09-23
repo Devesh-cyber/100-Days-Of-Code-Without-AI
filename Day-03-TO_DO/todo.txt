@@ -1,0 +1,83 @@
+App
+├── TodoForm
+├── TodoStats
+└── TodoDisplay
+    └── TodoItem
+Responsibility of each
+
+App.jsx
+
+Owns the todos state
+Handles adding, deleting, completing/uncompleting
+Passes required functions/data to children
+
+TodoForm
+
+Input for new todo
+Submit/add action
+Sends the new todo back to App
+
+TodoDisplay
+
+Receives the todo array
+Uses .map() to display todos
+Handles passing actions down to individual items
+
+TodoItem
+
+Displays one todo
+Shows completed/uncompleted state
+Delete button
+Toggle completion
+
+TodoStats
+
+Receives the todo array
+Derives:
+Total
+Active
+Completed
+
+┌──────────────────────────────────────────────┐
+│              Advanced Todo                  │
+│                                              │
+│  ┌──────────────────────────────┐  ┌──────┐ │
+│  │ Enter a new todo...          │  │ Add  │ │
+│  └──────────────────────────────┘  └──────┘ │
+│                                              │
+└──────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────┐
+│ Total: 4       Active: 2       Completed: 2 │
+└──────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────┐
+│ ☑ Learn React                         Delete │
+├──────────────────────────────────────────────┤
+│ ☐ Practice useState                  Delete │
+├──────────────────────────────────────────────┤
+│ ☑ Build Todo App                     Delete │
+├──────────────────────────────────────────────┤
+│ ☐ Learn array methods                Delete │
+└──────────────────────────────────────────────┘
+
+App
+│
+├── TodoForm
+│    ├── input
+│    └── Add button
+│
+├── TodoStats
+│    ├── Total
+│    ├── Active
+│    └── Completed
+│
+└── TodoDisplay
+     │
+     ├── TodoItem
+     │    ├── checkbox
+     │    ├── title
+     │    └── Delete
+     │
+     ├── TodoItem
+     └── TodoItem
