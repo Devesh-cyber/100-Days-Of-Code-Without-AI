@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 
 function ToDoModal({addTodo}){
 
     const [IsActive, setIsActive] = useState(false);
     const [counter, setCounter] = useState(0)
+    
 
     const handleSubmit = (event) => {
                 event.preventDefault();
@@ -15,9 +17,9 @@ function ToDoModal({addTodo}){
                 }
                 
                 let id = counter + 1
+                let completed = false
                 setCounter(counter + 1)
-                let  completed = false;
-
+                
                 addTodo({'id':id, 'todo':todo, 'completed':completed})
                 setIsActive(false);
             }

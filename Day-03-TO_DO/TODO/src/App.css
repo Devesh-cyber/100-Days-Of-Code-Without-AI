@@ -1,0 +1,270 @@
+/* ---------- Tokens ---------- */
+:root {
+  --bg: #0d1017;
+  --bg-glow: #171c2e;
+  --surface: #161b26;
+  --surface-2: #1d2331;
+  --line: #2a3142;
+  --ink: #e8ebf3;
+  --muted: #8b93a7;
+  --accent: #7c8cff;
+  --accent-strong: #6473f5;
+  --accent-soft: rgba(124, 140, 255, 0.14);
+  --done: #4ade9a;
+  --danger: #ff6b7a;
+  --danger-soft: rgba(255, 107, 122, 0.12);
+
+  --font: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color-scheme: dark;
+}
+
+/* ---------- Reset (overrides Vite's default index.css) ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  display: block;
+  background: radial-gradient(900px 500px at 50% -10%, var(--bg-glow), var(--bg));
+  background-color: var(--bg);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+}
+
+#root {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 56px 20px 80px;
+  border: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h1,
+h3 {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+button {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 18px;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+button:hover {
+  border-color: transparent;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Header + "Add Todo" (ToDoModal outer section) ---------- */
+#root > section:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+#root > section:first-child > h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+#root > section:first-child > button {
+  background: var(--accent-strong);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(100, 115, 245, 0.35);
+}
+
+#root > section:first-child > button:hover {
+  background: var(--accent);
+}
+
+/* ---------- Add-todo form card ---------- */
+.todo-modal {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.todo-modal header h1 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.todo-modal form {
+  display: flex;
+  gap: 10px;
+}
+
+.todo-modal input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--ink);
+  caret-color: var(--accent);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.todo-modal input[type="text"]::placeholder {
+  color: var(--muted);
+}
+
+.todo-modal input[type="text"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  outline: none;
+}
+
+.todo-modal form button {
+  background: var(--accent-strong);
+  color: #fff;
+}
+
+.todo-modal form button:hover {
+  background: var(--accent);
+}
+
+/* ---------- Todo list (DisplayToDo) ---------- */
+.display-todo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.todo-card:hover {
+  border-color: #3a4359;
+  background: var(--surface-2);
+}
+
+.todo-card input[type="checkbox"] {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  margin: 0;
+  accent-color: var(--done);
+  cursor: pointer;
+}
+
+.todo-card h3 {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  transition: color 0.15s ease;
+}
+
+.todo-card h3.completed {
+  text-decoration: line-through;
+  text-decoration-color: var(--muted);
+  color: var(--muted);
+}
+
+.todo-card button {
+  padding: 7px 13px;
+  font-size: 0.82rem;
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.todo-card button:hover {
+  background: var(--danger);
+  color: #12141a;
+}
+
+/* ---------- Stats (ToDoStats) ---------- */
+.stats-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.stats-card h3 {
+  padding: 16px 12px;
+  background: var(--surface);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--muted);
+}
+
+.stats-card h3:nth-child(2) {
+  color: var(--accent);
+}
+
+.stats-card h3:nth-child(3) {
+  color: var(--done);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  #root {
+    padding: 32px 14px 56px;
+  }
+
+  #root > section:first-child > h1 {
+    font-size: 1.6rem;
+  }
+
+  .todo-modal form {
+    flex-direction: column;
+  }
+
+  .stats-card {
+    grid-template-columns: 1fr;
+  }
+}
