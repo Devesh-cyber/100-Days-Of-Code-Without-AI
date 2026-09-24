@@ -1,12 +1,13 @@
 import { useState } from "react";
 
-function ProfileForm({profileList}) {
+function ProfileForm({addProfile}) {
     const [isActive, setIsActive] = useState(false)
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [accountType, setAccountType] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [imageURL, setImageURL] = useState('')
+    const [id, setId] = useState(0)
 
     const handlePassword = (e) => {
         let cf = e.target.value
@@ -23,11 +24,11 @@ function ProfileForm({profileList}) {
     const student_type = 
      <>
                 <label>College Name</label>
-                <input type="text" name="collegeName" placeholder="Enter your college name"  />
+                <input type="text" name="collegeName" required placeholder="Enter your college name"  />
                 <label> Course </label>
-                <input type="text" name="course" placeholder="Enter your course"  />
+                <input type="text" name="course" required placeholder="Enter your course"  />
                 <label> Year </label>
-                <select name="year" >
+                <select name="year" required>
                    <option value="2026">2026</option>
                     <option value="2025">2025</option>
                     <option value="2024">2024</option>
@@ -41,18 +42,70 @@ function ProfileForm({profileList}) {
     const professional_type = 
     <>
                 <label>Company Name</label>
-                <input type="text" name="companyName" placeholder="Enter your company name"  />
+                <input type="text" name="companyName" required placeholder="Enter your company name"  />
                 <label> Job Role </label>
-                <input type="text" name="jobRole" placeholder="Enter job role"  />
+                <input type="text" name="jobRole" required placeholder="Enter job role"  />
                 <label> Experience </label>
-                <input type="number"  name="experience" placeholder="0"/>
+                <input type="number"  name="experience" required placeholder="0"/>
     </>
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let form = e.target
+        let formData = new FormData(form)
+        let obj = Object.fromEntries(formData)
+        let skills = formData.getAll('skills')
+        if (obj.password !== obj.confirmPassword){
+            alert('Password Mismatched')
+            return
+        }
+        if (skills.length < 1){
+            alert('Choose atleast one skill')
+            return
+        }
+        
+        setId(id + 1)
+
+        let idd = id + 1
+        addProfile({
+            'id' : idd,
+            'fullName': obj.fullName,
+            'email': obj.email,
+            'age': obj.age,
+            'gender': obj.gender,
+            'country': obj.country,
+
+            'skills': skills,
+
+            'account_type': obj.account_type,
+
+            'collegeName': obj.collegeName,
+            'course': obj.course,
+            'year': obj.year,
+
+            'companyName': obj.companyName,
+            'jobRole': obj.jobRole,
+            'experience': obj.experience,
+
+            'bio': obj.bio,
+
+            'github': obj.github,
+            'linkedln': obj.linkedln,
+            'portfolio': obj.portfolio,
+
+            'profile_image': obj.profile,
+
+
+        })
+
+        setIsActive(false)
+    }
 
     const content = 
         <section className="Profile_Form">
             <h1> Create New Profile </h1>
             <p> Fill your deatils to create a new profile </p>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h3> A. Basic Information </h3>
                 <label> Full Name </label>
                 <input type="text" name='fullName' placeholder="Enter your name..." required></input>
@@ -79,18 +132,18 @@ function ProfileForm({profileList}) {
                 </select>
 
                 <h3> C. Skills (Select Multiple) </h3>
-                <input type="checkbox" name="python" /> Python
-                <input type="checkbox" name="javascript" /> JavaScript
-                <input type="checkbox" name="react" /> React
-                <input type="checkbox" name="fastAPI" /> FastAPI
-                <input type="checkbox" name="sql" /> SQL
-                <input type="checkbox" name="ml" /> Machine Learning
+                <input type="checkbox" name='skills' value="python" /> Python
+                <input type="checkbox" name='skills' value="javascript" /> JavaScript
+                <input type="checkbox" name='skills' value="react" /> React
+                <input type="checkbox" name='skills' value="fastAPI" /> FastAPI
+                <input type="checkbox" name='skills' value="sql" /> SQL
+                <input type="checkbox" name='skills' value="ml" /> Machine Learning
 
                 <h3> D. Account Type </h3>
-                <input type="radio" value='student' name="account_type" onChange={() => setAccountType('student')}/> Student
+                <input type="radio" value='student' name="account_type" required onChange={() => setAccountType('student')}/> Student
                 {(accountType === 'student') ? student_type : null}
 
-                <input type="radio" value='professional' name="account_type" onChange={() => setAccountType('professional')}/> Professional
+                <input type="radio" value='professional' name="account_type" required onChange={() => setAccountType('professional')}/> Professional
                 {(accountType === 'professional') ? professional_type : null}
 
                 <h3> E. About You</h3>
@@ -114,8 +167,8 @@ function ProfileForm({profileList}) {
                 <input type="checkbox" name="terms" required /> I agree  to the <a href='/'>terms and conditions</a>
 
                 <section className="buttons">
-                    <button > Reset </button>
-                    <button> Create Profile </button>
+                    <button type="reset"> Reset </button>
+                    <button type="submit"> Create Profile </button>
                 </section>
             </form>
 
