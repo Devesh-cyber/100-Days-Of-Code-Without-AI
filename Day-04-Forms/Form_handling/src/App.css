@@ -31,9 +31,12 @@
 /* =========================================================
    RESET / BASE
    ========================================================= */
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -49,9 +52,21 @@ body {
   line-height: 1.5;
 }
 
-#root { width: 100%; max-width: none; margin: 0; padding: 0; border: 0; text-align: left; }
+#root {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: left;
+}
 
-h1, h3, p { margin: 0; color: var(--ink); }
+h1,
+h3,
+p {
+  margin: 0;
+  color: var(--ink);
+}
 
 button {
   font-family: inherit;
@@ -63,49 +78,109 @@ button {
   padding: 12px 20px;
   transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .12s ease;
 }
-button:active { transform: scale(.98); }
+
+button:active {
+  transform: scale(.98);
+}
+
 button:focus-visible,
-input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 /* =========================================================
-   DASHBOARD HEADER (.header-page)
+   TOP BAR (.topbar) — title left, action right, stays slim
    ========================================================= */
-.header-page {
-  min-height: 100vh;
-  min-height: 100dvh;
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 20px clamp(20px, 4vw, 48px);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar-text {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 10px;
-  padding: 32px 20px;
+  gap: 4px;
+  text-align: left;
 }
 
-.header-page > h1 {
-  font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+.topbar-text>h1 {
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
   font-weight: 800;
-  letter-spacing: .06em;
+  letter-spacing: .04em;
 }
 
-.header-page > h3 {
-  max-width: 40ch;
-  font-size: clamp(.9rem, 2vw, 1rem);
+.topbar-text>h3 {
+  font-size: .82rem;
   font-weight: 500;
   color: var(--muted);
 }
 
-.header-page > button {
-  margin-top: 16px;
-  padding: 13px 26px;
+.topbar-cta {
+  flex-shrink: 0;
+  padding: 11px 20px;
   color: #fff;
   background: var(--accent);
-  box-shadow: 0 8px 20px rgba(109, 94, 240, .28);
+  box-shadow: 0 6px 16px rgba(109, 94, 240, .28);
+  white-space: nowrap;
 }
-.header-page > button:hover { background: var(--accent-strong); }
+
+.topbar-cta:hover {
+  background: var(--accent-strong);
+}
+
+/* =========================================================
+   PROFILES SECTION (App.jsx main)
+   ========================================================= */
+.profiles-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px clamp(20px, 4vw, 48px) 60px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  padding: 64px 20px;
+  color: var(--muted);
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.empty-state h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.empty-state p {
+  font-size: .88rem;
+}
+
+.profiles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
 
 /* =========================================================
    MODAL / FORM PANEL (.Profile_Form)
@@ -130,12 +205,13 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   box-shadow: 0 0 0 100vmax rgba(6, 7, 10, .7), 0 24px 60px rgba(0, 0, 0, .5);
 }
 
-.Profile_Form form > h1 {
+.Profile_Form form>h1 {
   padding: 22px 28px 2px;
   font-size: 1.35rem;
   font-weight: 800;
 }
-.Profile_Form form > p {
+
+.Profile_Form form>p {
   padding: 0 28px 16px;
   font-size: .85rem;
   color: var(--muted);
@@ -167,13 +243,14 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   border-radius: 50%;
   z-index: 10;
 }
+
 .Profile_Form .close:hover {
   color: var(--ink);
   border-color: var(--line-hover);
   background: var(--field);
 }
 
-.Profile_Form form > *:not(section.buttons) {
+.Profile_Form form>*:not(section.buttons) {
   padding-left: 28px;
   padding-right: 28px;
 }
@@ -181,11 +258,16 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
 /* =========================================================
    SECTIONS + HEADERS — one tint per section, A–H
    ========================================================= */
-.Profile_Form .section { margin: 22px 0 0; }
-.Profile_Form .section:first-child { margin-top: 18px; }
+.Profile_Form .section {
+  margin: 22px 0 0;
+}
 
-.Profile_Form .section > h3 {
-  --tint-bg: rgba(109,94,240,.14);
+.Profile_Form .section:first-child {
+  margin-top: 18px;
+}
+
+.Profile_Form .section>h3 {
+  --tint-bg: rgba(109, 94, 240, .14);
   --tint-ink: #b0a4ff;
   margin: 0 0 14px;
   padding: 9px 14px;
@@ -200,14 +282,45 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   border: 1px solid color-mix(in srgb, var(--tint-ink) 25%, transparent);
 }
 
-.Profile_Form .sec-blue   > h3 { --tint-bg: rgba(109,94,240,.14); --tint-ink: #b0a4ff; }
-.Profile_Form .sec-green  > h3 { --tint-bg: rgba(55,201,119,.12); --tint-ink: #7fe3ac; }
-.Profile_Form .sec-amber  > h3 { --tint-bg: rgba(240,178,80,.13); --tint-ink: #f4c988; }
-.Profile_Form .sec-purple > h3 { --tint-bg: rgba(109,94,240,.14); --tint-ink: #b0a4ff; }
-.Profile_Form .sec-pink   > h3 { --tint-bg: rgba(242,109,158,.13); --tint-ink: #f6a0c2; }
-.Profile_Form .sec-sky    > h3 { --tint-bg: rgba(80,168,240,.13); --tint-ink: #8fc7f7; }
-.Profile_Form .sec-mint   > h3 { --tint-bg: rgba(55,201,119,.12); --tint-ink: #7fe3ac; }
-.Profile_Form .sec-gold   > h3 { --tint-bg: rgba(240,178,80,.13); --tint-ink: #f4c988; }
+.Profile_Form .sec-blue>h3 {
+  --tint-bg: rgba(109, 94, 240, .14);
+  --tint-ink: #b0a4ff;
+}
+
+.Profile_Form .sec-green>h3 {
+  --tint-bg: rgba(55, 201, 119, .12);
+  --tint-ink: #7fe3ac;
+}
+
+.Profile_Form .sec-amber>h3 {
+  --tint-bg: rgba(240, 178, 80, .13);
+  --tint-ink: #f4c988;
+}
+
+.Profile_Form .sec-purple>h3 {
+  --tint-bg: rgba(109, 94, 240, .14);
+  --tint-ink: #b0a4ff;
+}
+
+.Profile_Form .sec-pink>h3 {
+  --tint-bg: rgba(242, 109, 158, .13);
+  --tint-ink: #f6a0c2;
+}
+
+.Profile_Form .sec-sky>h3 {
+  --tint-bg: rgba(80, 168, 240, .13);
+  --tint-ink: #8fc7f7;
+}
+
+.Profile_Form .sec-mint>h3 {
+  --tint-bg: rgba(55, 201, 119, .12);
+  --tint-ink: #7fe3ac;
+}
+
+.Profile_Form .sec-gold>h3 {
+  --tint-bg: rgba(240, 178, 80, .13);
+  --tint-ink: #f4c988;
+}
 
 /* =========================================================
    GRID + FIELDS
@@ -219,9 +332,17 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
 }
 
 @media (min-width: 640px) {
-  .Profile_Form .grid { grid-template-columns: 1fr 1fr; }
-  .Profile_Form .grid.three { grid-template-columns: repeat(3, 1fr); }
-  .Profile_Form .full { grid-column: 1 / -1; }
+  .Profile_Form .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .Profile_Form .grid.three {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .Profile_Form .full {
+    grid-column: 1 / -1;
+  }
 }
 
 .Profile_Form .field {
@@ -257,18 +378,22 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
 
 .Profile_Form .field select {
   background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
-                     linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
   background-position: calc(100% - 18px) center, calc(100% - 13px) center;
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
   padding-right: 32px;
 }
 
-.Profile_Form ::placeholder { color: var(--faint); }
+.Profile_Form ::placeholder {
+  color: var(--faint);
+}
 
 .Profile_Form .field input:hover,
 .Profile_Form .field select:hover,
-.Profile_Form .field textarea:hover { border-color: var(--line-hover); }
+.Profile_Form .field textarea:hover {
+  border-color: var(--line-hover);
+}
 
 .Profile_Form .field input:focus,
 .Profile_Form .field select:focus,
@@ -278,7 +403,16 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-.Profile_Form .field textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
+.Profile_Form .field textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.Profile_Form .field input:invalid,
+.Profile_Form .field select:invalid {
+  box-shadow: none;
+}
 
 .Profile_Form .error {
   grid-column: 1 / -1;
@@ -286,7 +420,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   font-size: .8rem;
   color: var(--danger);
 }
-.Profile_Form .error:empty { display: none; }
+
+.Profile_Form .error:empty {
+  display: none;
+}
 
 /* =========================================================
    RADIO / CHECKBOX CHIPS
@@ -296,7 +433,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 10px;
 }
-.Profile_Form .choices.two { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+.Profile_Form .choices.two {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
 
 .Profile_Form .choice {
   display: flex;
@@ -314,7 +454,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   cursor: pointer;
   transition: border-color .15s ease, background-color .15s ease;
 }
-.Profile_Form .choice:hover { border-color: var(--line-hover); }
+
+.Profile_Form .choice:hover {
+  border-color: var(--line-hover);
+}
 
 .Profile_Form .choice input {
   appearance: none;
@@ -327,13 +470,20 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   cursor: pointer;
   transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
 }
-.Profile_Form .choice input[type="radio"] { border-radius: 50%; }
-.Profile_Form .choice input[type="checkbox"] { border-radius: 5px; }
+
+.Profile_Form .choice input[type="radio"] {
+  border-radius: 50%;
+}
+
+.Profile_Form .choice input[type="checkbox"] {
+  border-radius: 5px;
+}
 
 .Profile_Form .choice input:checked {
   background: var(--accent);
   border-color: var(--accent);
 }
+
 .Profile_Form .choice input[type="checkbox"]:checked::after {
   content: "";
   display: block;
@@ -344,6 +494,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
+
 .Profile_Form .choice input[type="radio"]:checked::after {
   content: "";
   display: block;
@@ -360,13 +511,37 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   color: var(--ink);
   font-weight: 600;
 }
-.Profile_Form .choice:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.Profile_Form .choice.big { align-items: flex-start; padding: 14px; }
-.Profile_Form .choice.big input { margin-top: 3px; }
-.Profile_Form .choice.big span { display: flex; flex-direction: column; gap: 2px; }
-.Profile_Form .choice.big b { font-size: .92rem; font-weight: 700; }
-.Profile_Form .choice.big small { font-size: .76rem; font-weight: 400; color: var(--muted); }
+.Profile_Form .choice:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.Profile_Form .choice.big {
+  align-items: flex-start;
+  padding: 14px;
+}
+
+.Profile_Form .choice.big input {
+  margin-top: 3px;
+}
+
+.Profile_Form .choice.big span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.Profile_Form .choice.big b {
+  font-size: .92rem;
+  font-weight: 700;
+}
+
+.Profile_Form .choice.big small {
+  font-size: .76rem;
+  font-weight: 400;
+  color: var(--muted);
+}
 
 /* =========================================================
    CONDITIONAL FIELDS (student / professional)
@@ -379,16 +554,32 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   border-radius: var(--radius-md);
   animation: fade-in .18s ease;
 }
+
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* =========================================================
-   AVATAR
+   AVATAR (form preview)
    ========================================================= */
-.Profile_Form .avatar-row { display: flex; align-items: flex-end; gap: 16px; }
-.Profile_Form .avatar-row .field { flex: 1; }
+.Profile_Form .avatar-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.Profile_Form .avatar-row .field {
+  flex: 1;
+}
+
 .Profile_Form .avatar-row img {
   width: 64px;
   height: 64px;
@@ -400,7 +591,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
 }
 
 /* =========================================================
-   TERMS + LINKS
+   TERMS + LINKS (form)
    ========================================================= */
 .Profile_Form .terms {
   display: flex;
@@ -412,6 +603,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   color: var(--ink);
   cursor: pointer;
 }
+
 .Profile_Form .terms input {
   appearance: none;
   width: 17px;
@@ -423,10 +615,12 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   border-radius: 5px;
   cursor: pointer;
 }
+
 .Profile_Form .terms input:checked {
   background: var(--accent);
   border-color: var(--accent);
 }
+
 .Profile_Form .terms input:checked::after {
   content: "";
   display: block;
@@ -437,11 +631,19 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
-.Profile_Form a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
-.Profile_Form a:hover { color: var(--accent-strong); }
+
+.Profile_Form a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.Profile_Form a:hover {
+  color: var(--accent-strong);
+}
 
 /* =========================================================
-   BUTTONS — sticky footer
+   BUTTONS — sticky footer (form)
    ========================================================= */
 .Profile_Form .buttons {
   position: sticky;
@@ -459,6 +661,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   background: transparent;
   border-color: var(--line);
 }
+
 .Profile_Form .buttons button[type="reset"]:hover {
   color: var(--ink);
   border-color: var(--line-hover);
@@ -471,18 +674,279 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
   background: var(--accent);
   box-shadow: 0 8px 20px rgba(109, 94, 240, .28);
 }
-.Profile_Form .buttons button[type="submit"]:hover { background: var(--accent-strong); }
+
+.Profile_Form .buttons button[type="submit"]:hover {
+  background: var(--accent-strong);
+}
+
+/* =========================================================
+   PROFILE CARDS (DisplayProfile) — flat siblings under #root
+   ========================================================= */
+.profile-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr 1fr;
+  column-gap: 14px;
+  row-gap: 8px;
+  align-items: start;
+  align-self: start;
+  width: 100%;
+  padding: 20px;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .28);
+  transition: border-color .15s ease, transform .15s ease;
+}
+
+.profile-card:hover {
+  border-color: var(--line-hover);
+  transform: translateY(-2px);
+}
+
+/* avatar sits beside the first three header rows */
+.profile-card img.profile {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--field);
+  border: 3px solid var(--card-2);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.profile-card img.profile[src=""] {
+  visibility: hidden;
+}
+
+.profile-card h3.fullName {
+  grid-column: 2 / -1;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  align-self: end;
+}
+
+.profile-card .email {
+  grid-column: 2 / -1;
+  font-size: .83rem;
+  color: var(--muted);
+}
+
+.profile-card .account_type {
+  grid-column: 2 / -1;
+  justify-self: start;
+  padding: 3px 11px;
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: .03em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+}
+
+.profile-card .account_type:empty {
+  display: none;
+}
+
+/* stat-style fields flow 2-up automatically across the content columns */
+.profile-card .country,
+.profile-card .age,
+.profile-card .gender,
+.profile-card .course,
+.profile-card .graduationYear,
+.profile-card .yearStudy,
+.profile-card .jobRole,
+.profile-card .experience {
+  padding: 8px 10px;
+  font-size: .84rem;
+  color: var(--ink);
+  background: var(--field);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.profile-card .country:empty,
+.profile-card .age:empty,
+.profile-card .gender:empty,
+.profile-card .course:empty,
+.profile-card .graduationYear:empty,
+.profile-card .yearStudy:empty,
+.profile-card .jobRole:empty,
+.profile-card .experience:empty {
+  display: none;
+}
+
+.profile-card .country::before {
+  content: "Country \00b7  ";
+  color: var(--muted);
+}
+
+.profile-card .age::before {
+  content: "Age \00b7  ";
+  color: var(--muted);
+}
+
+.profile-card .gender::before {
+  content: "Gender \00b7  ";
+  color: var(--muted);
+}
+
+.profile-card .course::before {
+  content: "Course \00b7  ";
+  color: var(--muted);
+}
+
+.profile-card .graduationYear::before {
+  content: "Grad. Year \00b7  ";
+  color: var(--muted);
+}
+
+.profile-card .yearStudy::before {
+  content: "Year \00b7  ";
+  color: var(--muted);
+}
+
+.profile-card .jobRole::before {
+  content: "Role \00b7  ";
+  color: var(--muted);
+}
+
+.profile-card .experience::before {
+  content: "Experience \00b7  ";
+  color: var(--muted);
+}
+
+/* longer text fields take the full width */
+.profile-card .collegeName,
+.profile-card .companyName {
+  grid-column: 1 / -1;
+  padding: 8px 10px;
+  font-size: .88rem;
+  font-weight: 600;
+  background: var(--field);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.profile-card .collegeName:empty,
+.profile-card .companyName:empty {
+  display: none;
+}
+
+.profile-card .bio {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  padding: 12px 14px;
+  font-size: .88rem;
+  line-height: 1.6;
+  color: var(--muted);
+  background: var(--card-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.profile-card .bio:empty {
+  display: none;
+}
+
+.profile-card label {
+  grid-column: 1 / -1;
+  margin: 6px 0 -2px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.profile-card .skills {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.profile-card .skills button {
+  padding: 5px 12px;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 999px;
+  cursor: default;
+}
+
+.profile-card .skills button:active {
+  transform: none;
+}
+
+.profile-card>a {
+  padding: 9px 14px;
+  font-size: .84rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--ink);
+  background: var(--field);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.profile-card>a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.profile-card>a[href=""] {
+  display: none;
+}
 
 /* =========================================================
    RESPONSIVE
    ========================================================= */
 @media (max-width: 1200px) {
-  .Profile_Form { width: min(760px, 94vw); }
+  .Profile_Form {
+    width: min(760px, 94vw);
+  }
 }
 
 @media (max-width: 900px) {
-  .Profile_Form { width: min(600px, 94vw); }
-  .header-page > h1 { font-size: 1.9rem; }
+  .Profile_Form {
+    width: min(600px, 94vw);
+  }
+}
+
+@media (max-width: 720px) {
+  .profiles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card {
+    grid-template-columns: 52px 1fr;
+  }
+
+  .profile-card img.profile {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+@media (max-width: 560px) {
+  .topbar {
+    flex-wrap: wrap;
+    padding: 16px 18px;
+  }
+
+  .topbar-cta {
+    width: 100%;
+    order: 3;
+  }
 }
 
 @media (max-width: 600px) {
@@ -496,27 +960,65 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visib
     max-height: none;
     border-radius: 0;
   }
-  .Profile_Form > h1 { padding: 18px 18px 2px; font-size: 1.15rem; }
-  .Profile_Form > p { padding: 0 18px 14px; }
-  .Profile_Form form > *:not(section.buttons) { padding-left: 18px; padding-right: 18px; }
+
+  .Profile_Form form>h1 {
+    padding: 18px 18px 2px;
+    font-size: 1.15rem;
+  }
+
+  .Profile_Form form>p {
+    padding: 0 18px 14px;
+  }
+
+  .Profile_Form form>*:not(section.buttons) {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
 
   .Profile_Form .field input,
   .Profile_Form .field select,
-  .Profile_Form .field textarea { font-size: 16px; }
+  .Profile_Form .field textarea {
+    font-size: 16px;
+  }
 
-  .Profile_Form .choices { grid-template-columns: repeat(2, 1fr); }
-  .Profile_Form .choices.two { grid-template-columns: 1fr; }
+  .Profile_Form .choices {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .Profile_Form .choices.two {
+    grid-template-columns: 1fr;
+  }
 
   .Profile_Form .buttons {
     flex-direction: column-reverse;
     padding: 14px 18px;
     padding-bottom: max(14px, env(safe-area-inset-bottom));
   }
-  .Profile_Form .buttons button[type="submit"] { flex: none; }
+
+  .Profile_Form .buttons button[type="submit"] {
+    flex: none;
+  }
+
+  .profile-card {
+    padding: 16px;
+  }
+
+  .profile-card>a {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 480px) {
-  .header-page { padding: 24px 16px; }
-  .header-page > h1 { font-size: 1.6rem; letter-spacing: .03em; }
-  .Profile_Form .section > h3 { font-size: .72rem; padding: 8px 11px; }
+  .topbar-text>h1 {
+    font-size: 1.15rem;
+  }
+
+  .Profile_Form .section>h3 {
+    font-size: .72rem;
+    padding: 8px 11px;
+  }
+
+  .profiles-section {
+    padding-top: 24px;
+  }
 }
