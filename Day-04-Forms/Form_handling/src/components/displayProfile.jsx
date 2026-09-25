@@ -1,4 +1,4 @@
-function DisplayProfile({ profileList }) {
+function DisplayProfile({ profileList , handleDelete}) {
   return (
     <div className="profiles-grid">
       {profileList.map((p) => (
@@ -21,6 +21,10 @@ function DisplayProfile({ profileList }) {
                 {p.accountType}
               </span>
             </div>
+
+            <button className='delete-btn' onClick={() => handleDelete(p.id)}>
+              🗑
+            </button>
 
           </div>
 

@@ -13,6 +13,11 @@ function App() {
     setProfiles([...profiles, current]);
   };
 
+  const handleDelete = (id) => {
+    const updatedProfiles = profiles.filter((profile) => profile.id !== id);
+    setProfiles(updatedProfiles);
+  }
+
   return (
     <>
       <ProfileForm addProfile={addProfile} />
@@ -23,7 +28,7 @@ function App() {
             <p>Click "+ Create Profile" above to add your first one.</p>
           </div>
         ) : (
-          <DisplayProfile profileList={profiles} />
+          <DisplayProfile profileList={profiles} handleDelete={handleDelete} />
         )}
       </main>
     </>

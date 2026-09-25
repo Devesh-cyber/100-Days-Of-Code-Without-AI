@@ -322,6 +322,22 @@ a:focus-visible {
   --tint-ink: #f4c988;
 }
 
+.delete-btn {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color .15s ease, background-color .15s ease;
+}
+
+.delete-btn:hover {
+  color: var(--danger);
+  background: var(--card-2);
+}
+
 /* =========================================================
    GRID + FIELDS
    ========================================================= */
