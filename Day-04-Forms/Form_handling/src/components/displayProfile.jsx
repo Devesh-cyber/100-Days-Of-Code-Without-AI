@@ -22,7 +22,7 @@ function DisplayProfile({ profileList , handleDelete}) {
               </span>
             </div>
 
-            <button className='delete-btn' onClick={() => handleDelete(p.id)}>
+            <button className='delete-btn' aria-label="Delete profile" title="Delete profile" onClick={() => handleDelete(p.id)}>
               🗑
             </button>
 

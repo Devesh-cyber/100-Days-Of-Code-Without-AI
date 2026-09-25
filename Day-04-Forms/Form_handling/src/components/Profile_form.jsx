@@ -93,7 +93,7 @@ function ProfileForm({ addProfile }) {
 
     if (file.size > 2 * 1024 * 1024){
       setErrorMessage("Image size must be less than 2MB.")
-      e.target.value("")
+      e.target.value = ""
       return
     }
     setErrorMessage("")
@@ -377,7 +377,11 @@ function ProfileForm({ addProfile }) {
         </div>
 
         <section className="buttons">
-          <button type="reset"> Reset </button>
+          <button type="reset" onClick={() => {
+            setAccountType("");
+            setImagePreview("");
+            setImageFile(null);
+          }}> Reset </button>
           <button type="submit"> Create Profile </button>
         </section>
       </form>
