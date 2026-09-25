@@ -1,39 +1,162 @@
 function DisplayProfile({ profileList }) {
   return (
-    <>
+    <div className="profiles-grid">
       {profileList.map((p) => (
         <section className="profile-card" key={p.id}>
-          <img src={p.profile} className="profile" alt="pfp" />
-          <h3 className="fullName">{p.fullName}</h3>
-          <span className="email">{p.email}</span>
-          <span className="account_type">{p.accountType}</span>
-          {p.accountType === "student" && (
-            <>
-              <span className="collegeName">{p.accountTypeData?.collegeName}</span>
-              <span className="course">{p.accountTypeData?.course}</span>
-              <span className="graduationYear">{p.accountTypeData?.graduationYear}</span>
-              <span className="yearStudy">{p.accountTypeData?.yearStudy}</span>
-            </>
-          )}
-          {p.accountType === "professional" && (
-            <>
-              <span className="companyName">{p.accountTypeData?.companyName}</span>
-              <span className="jobRole">{p.accountTypeData?.jobRole}</span>
-              <span className="experience">{p.accountTypeData?.experience}</span>
-            </>
-          )}
-          <span className="bio">{p.bio}</span>
-          <span className="country">{p.country}</span>
-          <span className="age">{p.age}</span>
-          <span className="gender">{p.gender}</span>
-          <label> Skills</label>
-          <span className="skills">{p.skills.map(val => <button key={val}>{val}</button>)}</span>
-          <a href={p.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href={p.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href={p.portfolio} target="_blank" rel="noopener noreferrer">Portfolio</a>
+
+          {/* Header */}
+          <div className="profile-header">
+
+            <img
+              src={p.profile_image}
+              className="profile"
+              alt="Profile"
+            />
+
+            <div className="profile-heading">
+              <h3 className="fullName">{p.fullName}</h3>
+              <span className="email">{p.email}</span>
+
+              <span className="account_type">
+                {p.accountType}
+              </span>
+            </div>
+
+          </div>
+
+
+          {/* Account Information */}
+          <div className="account-info">
+
+            {p.accountType === "student" && (
+              <>
+                <div className="institution">
+                  <span className="info-icon">🎓</span>
+                  <span>{p.accountTypeData?.collegeName}</span>
+                </div>
+
+                <div className="education-line">
+                  <span>{p.accountTypeData?.course}</span>
+                  <span>•</span>
+                  <span>{p.accountTypeData?.yearStudy} Year</span>
+                  <span>•</span>
+                  <span>
+                    Graduating {p.accountTypeData?.graduationYear}
+                  </span>
+                </div>
+              </>
+            )}
+
+            {p.accountType === "professional" && (
+              <>
+                <div className="institution">
+                  <span className="info-icon">🏢</span>
+                  <span>{p.accountTypeData?.companyName}</span>
+                </div>
+
+                <div className="education-line">
+                  <span>{p.accountTypeData?.jobRole}</span>
+                  <span>💼</span>
+                  <span>
+                    {p.accountTypeData?.experience} Years Experience
+                  </span>
+                </div>
+              </>
+            )}
+
+          </div>
+
+
+          {/* Bio */}
+          <p className="bio">
+            {p.bio}
+          </p>
+
+
+          {/* Personal Metadata */}
+          <div className="profile-meta">
+
+            <span>
+              <span className="meta-icon">📍</span>
+              {p.country}
+            </span>
+
+            <span>
+              <span className="meta-icon">🎂</span>
+              {p.age}
+            </span>
+
+            <span>
+              <span className="meta-icon">👤</span>
+              {p.gender}
+            </span>
+
+          </div>
+
+
+          {/* Skills */}
+          <div className="skills-section">
+
+            <div className="skills-header">
+              <span className="skills-title">
+                <span>⚙</span>
+                Skills
+              </span>
+
+              <span className="skills-count">
+                +{p.skills.length}
+              </span>
+            </div>
+
+            <div className="skills">
+              {p.skills.map((val) => (
+                <button key={val} type="button">
+                  {val}
+                </button>
+              ))}
+            </div>
+
+          </div>
+
+
+          {/* Social Links */}
+          <div className="social-links">
+
+            {p.github && (
+              <a
+                href={p.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+               🐱 GitHub
+              </a>
+            )}
+
+            {p.linkedin && (
+              <a
+                href={p.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+               🔗 LinkedIn
+              </a>
+            )}
+
+            {p.portfolio && (
+              <a
+                href={p.portfolio}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+               🌐 Portfolio
+              </a>
+            )}
+
+          </div>
+
         </section>
       ))}
-    </>
+    </div>
   );
 }
 

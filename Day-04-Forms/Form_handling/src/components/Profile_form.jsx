@@ -4,7 +4,8 @@ function ProfileForm({ addProfile }) {
   const [isActive, setIsActive] = useState(false);
   const [accountType, setAccountType] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [imageURL, setImageURL] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
 
   const student_type = (
     <div className="conditional grid">
@@ -75,6 +76,34 @@ function ProfileForm({ addProfile }) {
     </div>
   );
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if(!file){
+      setImageFile(null)
+      setImagePreview("")
+      return
+    }
+
+    if (!["image/jpeg", "image/png"].includes(file.type)){
+      setErrorMessage("Please select a JPG or PNG image")
+      e.target.value = ""
+      return
+    }
+
+    if (file.size > 2 * 1024 * 1024){
+      setErrorMessage("Image size must be less than 2MB.")
+      e.target.value("")
+      return
+    }
+    setErrorMessage("")
+    setImageFile(file)
+
+    const previewURL = URL.createObjectURL(file)
+    setImagePreview(previewURL)
+
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let form = e.target;
@@ -123,12 +152,13 @@ function ProfileForm({ addProfile }) {
       'linkedin': obj.linkedin,
       'portfolio': obj.portfolio,
 
-      'profile_image': obj.profile,
+      'profile_image': imagePreview,
     });
 
     setIsActive(false);
     setAccountType("")
-    setImageURL("")
+    setImagePreview("")
+    setImageFile(null)
   };
 
   const content = (
@@ -136,7 +166,7 @@ function ProfileForm({ addProfile }) {
       <button
         className="close"
         type="button"
-        onClick={() => {setIsActive(false);setAccountType("");setImageURL("")}}
+        onClick={() => {setIsActive(false);setAccountType("");setImagePreview("");setImageFile(null)}}
       >
         {" "}
         X{" "}
@@ -313,15 +343,21 @@ function ProfileForm({ addProfile }) {
           <h3> G. Profile Picture </h3>
           <div className="avatar-row">
             <div className="field">
-              <label> Image URL (Optional) </label>
+              <label> Profile Picture (Optional) </label>
               <input
-                type="url"
+                type="file"
                 name="profile"
-                placeholder="https://example.com/your-image.jpg"
-                onChange={(e) => setImageURL(e.target.value)}
+                accept="image/jpeg,image/png"
+                onChange={handleImageChange}
               />
             </div>
-            {imageURL === "" ? null : <img src={imageURL} alt="pfp" />}
+            {imagePreview && (
+              <div className="avatar-preview">
+                <img src={imagePreview}
+                alt='pfp'
+                />
+              </div>
+            )}
           </div>
         </div>
 

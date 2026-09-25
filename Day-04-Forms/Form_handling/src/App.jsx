@@ -20,15 +20,12 @@ function App() {
         {profiles.length === 0 ? (
           <div className="empty-state">
             <h3>No profiles yet</h3>
-            <p>Click "+ Profile" above to add your first one.</p>
+            <p>Click "+ Create Profile" above to add your first one.</p>
           </div>
         ) : (
-          <div className="profiles-grid">
-            <DisplayProfile profileList={profiles} />
-          </div>
+          <DisplayProfile profileList={profiles} />
         )}
       </main>
-      
     </>
   );
 }
