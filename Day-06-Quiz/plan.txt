@@ -1,0 +1,46 @@
+100 Days of code without AI - Day 05
+
+Quiz Application
+
+Functionalities:
+- Quiz Main Title
+- Quiz question (on out theme)
+- Quiz option when clicked wntire div gets higlighted
+- Back and Next button below to navigte between pages
+- A ● ● ● ○ ○ thing for telling how many questions covered and how much to go also Question 3 of 5 thing too
+- At last question switch the next button to submit button
+- Once submitted a pop up appear which blurs background and a emoticon also the score correct / no of questions below 
+
+1. What identifies the current question?
+I was thinking of creating a array which will consist of questions so there are only 5 questions so index no of the aray can be used as identifier or we need to give id for every questioin
+
+2. How will you store the user's answers for all 5 questions?
+I wont store users answer as soon as user enter the question will match it with the answer and change the socre accordingly
+
+3. How will you know which option should currently be highlighted?
+Will use onClick can have radio with entire label selected highlight by changing color
+
+4. How will you know whether you're on the final question?
+again limited amount of questions so can loop through forEach or map ig
+
+5. How will you calculate the score?
+Score will be no. of answers marked correctly soi it increments when user clicks at next after selecting any ans 
+
+6. Does the ● ● ● ○ ○ indicator need its own state?
+lets skip adding this stuff lets first create the core thing we can later add it
+
+7. Does Question 3 of 5 need its own state?
+lets skip adding this stuff lets first create the core thing we can later add it
+
+8. Does the modal need state?
+Yes isActive state 
+
+9. Does the emoji need state, or can it be derived from the score?
+No need for the state here we can change it on score state value
+
+
+🔍🐠 — Finding Nemo
+🧙‍♂️🧙‍♀️🧹⚡ — Harry Potter
+🚢🏔️💔 — Titanic
+👳‍♂️🏏🌧️ — Lagaan
+🤼‍♂️👧🥇 — Dangal
