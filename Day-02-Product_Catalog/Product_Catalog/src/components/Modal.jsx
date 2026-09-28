@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Modal({ onAddProducts }) {
+function Modal({ onAddProducts, counter, setCounter }) {
     const [IsActive, setIsActive] = useState(false);
 
     const handleSubmit = (event) => {
@@ -10,9 +10,21 @@ function Modal({ onAddProducts }) {
         let formData = new FormData(form);
         let formDataObj = Object.fromEntries(formData.entries());
 
-        console.log(formDataObj);
+        setCounter(counter + 1)
+        let id = counter + 1
 
-        onAddProducts(formDataObj);
+        const obj = {
+            'id' : id,
+            'product_name' : formDataObj.product_name,
+            'price' : parseFloat(formDataObj.price),
+            'category' : formDataObj.category,
+            'description' : formDataObj.description,
+            'image_url' : formDataObj.image_url,
+            'stock' : parseInt(formDataObj.stock)
+        } 
+
+
+        onAddProducts(obj);
         setIsActive(false);
     };
 
@@ -29,6 +41,7 @@ function Modal({ onAddProducts }) {
                         name="product_name"
                         type="text"
                         placeholder="Enter product name..."
+                        required
                     />
                 </div>
                 <div className="form-group">
@@ -37,15 +50,17 @@ function Modal({ onAddProducts }) {
                         name="price"
                         type="number"
                         placeholder="Enter price..."
+                        required
                     />
                 </div>
                 <div className="form-group">
                     <label>Category</label>
-                    <select name="category">
+                    <select name="category" required>
                         <option value="">Select category</option>
                         <option value="electronics">Electronics</option>
                         <option value="clothing">Clothing</option>
                         <option value="food">Food</option>
+                        <option value="other">Other</option>
                     </select>
                 </div>
                 <div className="form-group">
@@ -69,6 +84,7 @@ function Modal({ onAddProducts }) {
                         name="stock"
                         type="number"
                         placeholder="Enter stock..."
+                        required
                     />
                 </div>
                 <button className="submit-product-btn" type="submit">
