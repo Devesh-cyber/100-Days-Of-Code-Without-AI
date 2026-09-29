@@ -1,0 +1,380 @@
+/* =========================================
+   GLOBAL RESET
+========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%,
+      rgba(35, 80, 150, 0.25),
+      transparent 35%),
+    radial-gradient(circle at 85% 80%,
+      rgba(90, 50, 160, 0.22),
+      transparent 35%),
+    #121a35;
+  color: #ffffff;
+}
+
+/* =========================================
+   MAIN APP
+========================================= */
+.page {
+  width: min(1440px, 94%);
+  margin: 40px auto;
+  padding: 112px 24px 32px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  background:
+    linear-gradient(145deg,
+      rgba(7, 18, 40, 0.96),
+      rgba(9, 18, 39, 0.92));
+  border: 1px solid rgba(100, 140, 220, 0.25);
+  border-radius: 28px;
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.35),
+    inset 0 0 50px rgba(50, 100, 180, 0.05);
+}
+
+/* =========================================
+   MAIN HEADER
+========================================= */
+.page::before {
+  content: "◷  Time Tools";
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: #ffffff;
+}
+
+.page::after {
+  content: "Live Clock and Stopwatch built with React";
+  position: absolute;
+  top: 84px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 16px;
+  color: #9baed1;
+
+}
+
+/* =========================================
+   LIVE CLOCK CARD
+========================================= */
+.clock-card {
+  padding: 112px 32px 32px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background:
+    linear-gradient(145deg,
+      #1d4f8b,
+      #1b4277);
+  border: 1px solid rgba(55, 155, 255, 0.55);
+  border-radius: 22px;
+  box-shadow:
+    inset 0 0 35px rgba(40, 130, 255, 0.08),
+    0 15px 30px rgba(0, 0, 0, 0.18);
+}
+
+.clock-card::before {
+  content: "◷  Live Clock";
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  font-size: 31px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.clock-card::after {
+  content: "Shows the current date and time, updated every second.";
+  position: absolute;
+  top: 70px;
+  left: 32px;
+  right: 32px;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #b6c9e8;
+}
+
+/* =========================================
+   DATE & TIME BOXES
+========================================= */
+.date,
+.time {
+  width: 100%;
+  height: 96px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background:
+    linear-gradient(145deg,
+      rgba(39, 91, 157, 0.9),
+      rgba(34, 79, 139, 0.9));
+  border: 1px solid rgba(90, 165, 245, 0.32);
+  border-radius: 16px;
+  box-shadow: inset 0 0 20px rgba(80, 160, 255, 0.05);
+}
+
+.box-icon {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.box-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.box-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9baed1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.box-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================
+   STOPWATCH CARD
+========================================= */
+.stopwatch-card {
+  padding: 112px 28px 32px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background:
+    linear-gradient(145deg,
+      #3b317e,
+      #342b70);
+  border: 1px solid rgba(135, 100, 255, 0.55);
+  border-radius: 22px;
+  box-shadow:
+    inset 0 0 35px rgba(120, 80, 255, 0.08),
+    0 15px 30px rgba(0, 0, 0, 0.18);
+}
+
+.stopwatch-card::before {
+  content: "◴  Stopwatch";
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  font-size: 31px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.stopwatch-card::after {
+  content: "Start, pause, and reset to track elapsed time.";
+  position: absolute;
+  top: 70px;
+  left: 32px;
+  right: 32px;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #c9bedf;
+}
+
+/* =========================================
+   STOPWATCH DISPLAY
+========================================= */
+.timer-display-wrapper {
+  width: 100%;
+  background:
+    linear-gradient(145deg,
+      rgba(25, 24, 73, 0.95),
+      rgba(28, 26, 68, 0.95));
+  border: 1px solid rgba(125, 110, 210, 0.22);
+  border-radius: 16px;
+  padding: 20px 0;
+  box-shadow: inset 0 0 25px rgba(20, 20, 80, 0.35);
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
+}
+
+.timer-labels {
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 40px 0;
+  font-size: 11px;
+  color: #9baed1;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================
+   STOPWATCH BUTTONS
+========================================= */
+.stopwatch-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.start,
+.pause,
+.reset {
+  flex: 1;
+  height: 50px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.start:hover,
+.pause:hover,
+.reset:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.start:active,
+.pause:active,
+.reset:active {
+  transform: translateY(0);
+}
+
+.start {
+  background: linear-gradient(135deg, #19b978, #20c87e);
+  box-shadow: 0 6px 16px rgba(20, 190, 120, 0.20);
+}
+
+.pause {
+  background: linear-gradient(135deg, #f0a51b, #f6b82b);
+  box-shadow: 0 6px 16px rgba(240, 165, 27, 0.20);
+}
+
+.reset {
+  background: linear-gradient(135deg, #e53856, #ed4962);
+  box-shadow: 0 6px 16px rgba(230, 50, 80, 0.20);
+}
+
+/* =========================================
+   RESPONSIVE DESIGN (Stacks cards on mobile)
+========================================= */
+@media (max-width: 950px) {
+  .page {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    width: 96%;
+    margin: 15px auto;
+    padding: 95px 14px 20px;
+    border-radius: 20px;
+  }
+
+  .page::before {
+    font-size: 34px;
+  }
+
+  .page::after {
+    top: 70px;
+    font-size: 13px;
+    padding: 0 10px;
+  }
+
+  .clock-card,
+  .stopwatch-card {
+    padding: 95px 18px 24px;
+  }
+
+  .clock-card::before,
+  .stopwatch-card::before {
+    top: 20px;
+    left: 18px;
+    font-size: 24px;
+  }
+
+  .clock-card::after,
+  .stopwatch-card::after {
+    top: 56px;
+    left: 18px;
+    right: 18px;
+    font-size: 13px;
+  }
+
+  .date,
+  .time {
+    height: 82px;
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .box-icon {
+    font-size: 20px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .box-value {
+    font-size: 18px;
+  }
+
+  .timer-display {
+    font-size: 32px;
+  }
+
+  .stopwatch-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .start,
+  .pause,
+  .reset {
+    flex: 1;
+    width: auto;
+    height: 44px;
+    font-size: 12px;
+  }
+}

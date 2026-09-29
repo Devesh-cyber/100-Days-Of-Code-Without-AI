@@ -1,0 +1,35 @@
+useEffect() is a react hook which is used to run external thing whether calling a API react timers accesing db while the page renders
+
+useEffect(() => {
+    // Runs when Page Render
+});
+
+useEffect(() => {
+    // Runs only on the first render
+}, []);
+
+useEffect(() => {
+    // Runs on first render
+    // And any time any dependency value changes
+}, [prop, state]);
+
+
+                 Stopwatch
+                     │
+             ┌───────┴────────┐
+             ↓                ↓
+       elapsedTime         isRunning
+             │                │
+             │                ↓
+             │          useEffect
+             │                │
+             │          timer running?
+             │             /       \
+             │           yes        no
+             │            ↓          ↓
+             │       increment    nothing
+             │
+             ↓
+       format elapsedTime
+             ↓
+       HH : MM : SS
