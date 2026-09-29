@@ -52,3 +52,19 @@ let formDataObj = Object.formEntries(formData.entries())
 }
 
 Hey uk what got the mental picture of the form stuff using modal so it will be true visible on clicking add cart later form will appear will fetch data from form also removes out from the modal by clicking on form suibmoit using onSubmit() hence in this way I will be getting form data in form of objct later will be storing it in my array along with oither product object and will later need to figire out regarding displaying them prbly will use .map() func one thing Ig our form will refresh and reload every timw we will load the new stuff
+
+┌────────────────────────────────┐
+│             CART               │
+│                                │
+│  Wireless Mouse                │
+│  ₹799 × 2                      │
+│                                │
+│        [-]  2  [+]             │
+│                                │
+│  Available: 8                  │
+│                                │
+│  ----------------------------  │
+│  Final Price: ₹1598            │
+│                                │
+│       [ Place Order ]          │
+└────────────────────────────────┘
