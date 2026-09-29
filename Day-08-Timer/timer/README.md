@@ -1,16 +1,178 @@
-# React + Vite
+# Time Tools — React
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A small React project combining a **Live Clock** and a **Stopwatch** to practice React state management, `useEffect`, timers, cleanup, and derived state.
 
-Currently, two official plugins are available:
+This project was built as part of the **100 Days of Code — W/O AI** series.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+### Live Clock
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Displays the current date
+* Displays the current time
+* Updates automatically every second
+* Uses JavaScript's `Date` object
+* Uses `useEffect` and `setInterval`
+* Cleans up the interval when the component unmounts
 
-## Expanding the Oxlint configuration
+### Stopwatch
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+* Start the stopwatch
+* Pause the stopwatch
+* Reset the stopwatch
+* Tracks elapsed time using a single state value
+* Converts elapsed seconds into hours, minutes, and seconds
+* Automatically cleans up the interval when paused/unmounted
+
+## Concepts Practiced
+
+* React functional components
+* `useState`
+* `useEffect`
+* `setInterval`
+* `clearInterval`
+* Effect dependencies
+* Effect cleanup
+* JavaScript `Date`
+* Derived values
+* Array destructuring
+* Functional state updates
+* Conditional side effects
+* Component-based architecture
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   ├── LiveClock.jsx
+│   └── StopWatch.jsx
+│
+├── App.jsx
+├── App.css
+└── main.jsx
+```
+
+## How It Works
+
+### Live Clock
+
+The current time is stored in React state:
+
+```js
+const [time, setTime] = useState(new Date())
+```
+
+An interval updates the state every second:
+
+```js
+setTime(new Date())
+```
+
+The required values are then extracted from the `Date` object:
+
+```js
+time.getDate()
+time.getMonth() + 1
+time.getFullYear()
+
+time.getHours()
+time.getMinutes()
+time.getSeconds()
+```
+
+The interval is cleaned up using:
+
+```js
+return () => clearInterval(interval)
+```
+
+### Stopwatch
+
+The stopwatch maintains two pieces of state:
+
+```js
+const [elapsedTime, setElapsedTime] = useState(0)
+const [isRunning, setIsRunning] = useState(false)
+```
+
+`elapsedTime` acts as the single source of truth and stores the total elapsed seconds.
+
+When `isRunning` becomes `true`, the effect creates an interval:
+
+```text
+isRunning
+    ↓
+true
+    ↓
+setInterval()
+    ↓
+elapsedTime + 1 every second
+```
+
+When the stopwatch is paused, the effect cleanup clears the interval.
+
+The total seconds are converted into:
+
+```text
+Hours
+Minutes
+Seconds
+```
+
+using calculations based on `elapsedTime`.
+
+## Tech Stack
+
+* React
+* Vite
+* JavaScript
+* CSS
+
+## Running Locally
+
+Clone the repository and install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Then open the local URL provided by Vite.
+
+## Learning Goal
+
+The main purpose of this project was to understand **`useEffect` through practical use** rather than treating it as just another React hook.
+
+The project demonstrates two different timer patterns:
+
+```text
+Live Clock
+Date → useState → useEffect → setInterval
+```
+
+and:
+
+```text
+Stopwatch
+isRunning → useEffect → setInterval
+                     ↓
+              elapsedTime
+                     ↓
+             H : M : S
+```
+
+## Day 08 / 100
+
+**100 Days of Code — W/O AI**
+
+Day 08 focused on:
+
+> **useEffect + Lifecycle Thinking**
+
+Built with React, Vite, JavaScript, and CSS.
