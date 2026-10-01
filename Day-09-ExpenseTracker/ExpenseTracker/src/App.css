@@ -1,0 +1,431 @@
+/* =========================================================
+   TOKENS
+   ========================================================= */
+:root {
+  --bg: #0c1118;
+  --card: #141b26;
+  --card-2: #1a2330;
+  --field: #0f151f;
+  --line: #273243;
+  --line-hover: #374155;
+
+  --ink: #f2f5fa;
+  --muted: #90a0b7;
+  --faint: #60708a;
+
+  --accent: #22c55e;
+  --accent-dark: #16a34a;
+  --accent-soft: rgba(34, 197, 94, .14);
+  --blue: #3b82f6;
+  --purple: #a855f6;
+  --danger: #f05a5a;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --font: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color-scheme: dark;
+}
+
+/* =========================================================
+   RESET / BASE
+   ========================================================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.5;
+  background: var(--bg);
+}
+
+#root {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+h1 {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   PAGE SHELL
+   ========================================================= */
+.expense-main {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+}
+
+/* =========================================================
+   HEADER  (img + h1 + p, no wrapper class — styled directly)
+   ========================================================= */
+.expense-main>header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.expense-main>header img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.expense-main>header h1 {
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+.expense-main>header p {
+  margin: 0;
+  font-size: .92rem;
+  color: var(--muted);
+}
+
+/* =========================================================
+   STATS  (.statistics > h1 + three <p> stat cards)
+   ========================================================= */
+.statistics {
+  margin-bottom: 24px;
+}
+
+.statistics>h1 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* the three <p> siblings become the stat cards */
+.statistics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.statistics>h1 {
+  grid-column: 1 / -1;
+}
+
+.statistics>p {
+  margin: 0;
+  padding: 16px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+/* style just the label line (before the <br/>) differently
+   from the value line that follows it */
+.statistics>p::first-line {
+  font-size: .78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+}
+
+.statistics>p:nth-of-type(1) {
+  border-top: 3px solid var(--accent);
+}
+
+.statistics>p:nth-of-type(2) {
+  border-top: 3px solid var(--blue);
+}
+
+.statistics>p:nth-of-type(3) {
+  border-top: 3px solid var(--purple);
+}
+
+/* =========================================================
+   ADD EXPENSE BUTTON
+   ========================================================= */
+.Add-Expense {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.Add-Expense>button {
+  padding: 13px 28px;
+  font-size: .95rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: background-color .15s ease, transform .12s ease;
+}
+
+.Add-Expense>button:hover {
+  background: var(--accent-dark);
+}
+
+.Add-Expense>button:active {
+  transform: scale(.97);
+}
+
+/* =========================================================
+   EXPENSE MODAL  (.form-main — centered overlay card)
+   ========================================================= */
+.form-main {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  width: min(420px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 26px 26px 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  /* the huge spread is the dimmed backdrop; no separate overlay element needed */
+  box-shadow: 0 0 0 100vmax rgba(4, 6, 12, .7), 0 24px 60px rgba(0, 0, 0, .5);
+}
+
+.form-main>h1 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.form-main br {
+  display: none;
+}
+
+.form-main label {
+  display: block;
+  margin: 14px 0 6px;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.form-main label:first-of-type {
+  margin-top: 0;
+}
+
+.form-main input,
+.form-main select {
+  display: block;
+  width: 100%;
+  padding: 11px 13px;
+  font-family: inherit;
+  font-size: .9rem;
+  color: var(--ink);
+  background: var(--field);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.form-main ::placeholder {
+  color: var(--faint);
+}
+
+.form-main input:focus,
+.form-main select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.form-main select {
+  appearance: none;
+  padding-right: 32px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) center, calc(100% - 13px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.form-main select option {
+  color: #111;
+}
+
+.form-main .buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.form-main .buttons button {
+  flex: 1;
+  padding: 12px 0;
+  font-size: .92rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  transition: background-color .15s ease, border-color .15s ease, transform .12s ease;
+}
+
+.form-main .buttons button:active {
+  transform: scale(.97);
+}
+
+.form-main .buttons button[name="cancel"] {
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line);
+}
+
+.form-main .buttons button[name="cancel"]:hover {
+  color: var(--ink);
+  border-color: var(--line-hover);
+}
+
+.form-main .buttons button[name="addExpense"] {
+  color: #fff;
+  background: var(--accent);
+}
+
+.form-main .buttons button[name="addExpense"]:hover {
+  background: var(--accent-dark);
+}
+
+/* =========================================================
+   DISPLAY LIST  (.display-main rows)
+   ========================================================= */
+.display {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.display-main {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.display-main strong:nth-of-type(1) {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.display-main p {
+  margin: 0;
+  font-size: .82rem;
+  color: var(--muted);
+}
+
+.display-main strong:nth-of-type(2) {
+  display: inline-flex;
+  width: fit-content;
+  padding: 3px 11px;
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: var(--purple);
+  background: rgba(168, 85, 246, .14);
+  border-radius: 999px;
+}
+
+.display-main strong:nth-of-type(3) {
+  font-size: .98rem;
+  font-weight: 800;
+  color: var(--accent);
+  justify-self: end;
+}
+
+.display-main strong:nth-of-type(3)::before {
+  content: "₹";
+}
+
+.display-main button {
+  padding: 6px 9px;
+  font-size: .85rem;
+  background: transparent;
+  border-radius: var(--radius-sm);
+}
+
+.display-main button:hover {
+  background: rgba(240, 90, 90, .14);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 640px) {
+  .statistics {
+    grid-template-columns: 1fr;
+  }
+
+  .statistics>p {
+    text-align: left;
+  }
+
+  .display-main {
+    grid-template-columns: 1fr auto;
+    row-gap: 4px;
+  }
+
+  .display-main strong:nth-of-type(1) {
+    grid-column: 1 / -1;
+  }
+
+  .display-main p {
+    order: 1;
+  }
+
+  .display-main strong:nth-of-type(2) {
+    order: 2;
+  }
+
+  .display-main strong:nth-of-type(3) {
+    order: 3;
+    justify-self: start;
+  }
+
+  .display-main button {
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: end;
+  }
+}
