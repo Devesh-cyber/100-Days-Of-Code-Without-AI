@@ -1,0 +1,20 @@
+/* Global reset and shared defaults */
+:root {
+  color-scheme: dark;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: #0d0d11;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+::selection {
+  color: #ffffff;
+  background: #6740b8;
+}

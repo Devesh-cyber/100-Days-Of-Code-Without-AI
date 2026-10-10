@@ -1,0 +1,327 @@
+/* NoteSpace — polished dark notes workspace */
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f4f1fa;
+  background: #0d0d11;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --page: #0d0d11;
+  --surface: #17171d;
+  --surface-raised: #1c1c24;
+  --surface-hover: #23232d;
+  --line: #2b2b37;
+  --text: #f4f1fa;
+  --muted: #a6a3b5;
+  --accent: #9b6cff;
+  --accent-hover: #b18cff;
+  --danger: #ff738b;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--page);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% -20%, rgba(126, 75, 220, 0.14), transparent 42rem),
+    var(--page);
+}
+
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+::selection { color: #fff; background: #6740b8; }
+#root { min-height: 100vh; }
+
+.main {
+  width: min(100% - 40px, 980px);
+  margin: 0 auto;
+  padding: 38px 0 72px;
+}
+
+/* Header */
+.main-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 20px;
+  row-gap: 5px;
+  padding: 0 0 24px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.main-header h1:first-child {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.8rem, 4vw, 2.25rem);
+  font-weight: 750;
+  letter-spacing: -0.065em;
+}
+
+.main-header h1:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  color: #d7c3ff;
+  font-size: 1.25rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.035em;
+}
+
+.main-header p {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-align: right;
+}
+
+/* Add-note action and form */
+.note-modal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin: 0 0 22px;
+}
+
+.note-modal > button {
+  display: inline-flex;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  color: #fff;
+  background: linear-gradient(145deg, #9b6cff, #6738cf);
+  font-size: 1.8rem;
+  line-height: 1;
+  box-shadow: 0 8px 24px rgba(111, 61, 213, .22);
+  transition: transform .16s ease, filter .16s ease;
+}
+
+.note-modal > button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+}
+
+.note-modal form {
+  flex: 0 0 100%;
+  width: 100%;
+  margin-top: 18px;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: 0 18px 48px rgba(0,0,0,.2);
+}
+
+.note-modal form h1 {
+  margin: 0 0 24px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -.035em;
+}
+
+.note-modal form strong {
+  display: inline-block;
+  margin: 0 0 8px;
+  color: #d7d3e1;
+  font-size: .84rem;
+  font-weight: 600;
+}
+
+.note-modal form input[type="text"],
+.note-modal form input:not([type]),
+.note-modal form textarea,
+.note-modal form select {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border: 1px solid #343440;
+  border-radius: 12px;
+  color: var(--text);
+  background: #111116;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+
+.note-modal form textarea { min-height: 130px; resize: vertical; line-height: 1.6; }
+.note-modal form input::placeholder, .note-modal form textarea::placeholder { color: #777486; }
+
+.note-modal form input:focus,
+.note-modal form textarea:focus,
+.note-modal form select:focus,
+.note-card input:focus,
+.note-card textarea:focus {
+  border-color: #8f64ed;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(155,108,255,.13);
+}
+
+.note-modal form input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0 0 18px 8px;
+  accent-color: var(--accent);
+  vertical-align: middle;
+}
+
+.note-modal form button {
+  min-height: 42px;
+  margin: 4px 8px 0 0;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: white;
+  background: linear-gradient(135deg, #9665f5, #7142d1);
+  font-size: .9rem;
+  font-weight: 650;
+  transition: transform .16s ease, filter .16s ease;
+}
+.note-modal form button:hover { transform: translateY(-1px); filter: brightness(1.12); }
+.note-modal form button[name="cancel"] {
+  border-color: var(--line);
+  color: #d7d3e1;
+  background: transparent;
+}
+.note-modal form button[name="cancel"]:hover { background: var(--surface-hover); }
+
+/* Notes — one column of clean, editorial cards */
+.note-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 16px;
+  row-gap: 12px;
+  min-width: 0;
+  padding: 22px 24px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: linear-gradient(135deg, rgba(27,27,35,.98), rgba(21,21,27,.98));
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  transition: border-color .16s ease, background .16s ease, transform .16s ease;
+}
+
+.note-card:hover {
+  border-color: #424052;
+  background: linear-gradient(135deg, #1d1d26, #17171e);
+  transform: translateY(-1px);
+}
+
+.note-card h1 {
+  grid-column: 1;
+  margin: 0;
+  color: var(--text);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -.025em;
+  overflow-wrap: anywhere;
+}
+
+.note-card h2 {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #c8c5d2;
+  font-size: .96rem;
+  font-weight: 400;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.note-card p {
+  grid-column: 1;
+  margin: 0;
+  color: #8f8c9e;
+  font-size: .78rem;
+  line-height: 1.5;
+}
+
+.note-card input[name="editTitle"],
+.note-card input[name="editDescription"],
+.note-card textarea[name="editDescription"] {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 13px;
+  border: 1px solid #343440;
+  border-radius: 11px;
+  color: var(--text);
+  background: #111116;
+}
+
+.note-card textarea[name="editDescription"] { min-height: 120px; resize: vertical; line-height: 1.6; }
+
+/* Keep action buttons grouped at the end of each card */
+.note-card > button {
+  justify-self: end;
+  align-self: center;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #353441;
+  border-radius: 10px;
+  color: #e7e2f0;
+  background: #24232d;
+  font-size: .86rem;
+  font-weight: 550;
+  transition: background .16s ease, border-color .16s ease, transform .16s ease;
+}
+
+.note-card > button:hover {
+  transform: translateY(-1px);
+  border-color: #5b4b7a;
+  background: #302b3d;
+}
+
+.note-card > button[name="saveChanges"] {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, #9665f5, #7142d1);
+  font-weight: 650;
+}
+.note-card > button[name="saveChanges"]:hover { filter: brightness(1.1); }
+.note-card > button[name="del"] { color: var(--danger); }
+.note-card > button[name="del"]:hover { border-color: rgba(255,115,139,.25); background: rgba(255,115,139,.08); }
+
+/* Small screens */
+@media (max-width: 600px) {
+  .main { width: min(100% - 24px, 980px); padding-top: 22px; }
+  .main-header { column-gap: 12px; padding-bottom: 18px; margin-bottom: 20px; }
+  .main-header h1:first-child { font-size: 1.65rem; }
+  .main-header h1:nth-child(2) { font-size: 1rem; }
+  .main-header p { font-size: .72rem; }
+  .note-modal > button { width: 46px; height: 46px; border-radius: 14px; }
+  .note-modal form { padding: 19px; border-radius: 16px; }
+  .note-card { padding: 18px; border-radius: 15px; column-gap: 10px; }
+  .note-card h1 { font-size: 1.03rem; }
+  .note-card h2 { font-size: .9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
