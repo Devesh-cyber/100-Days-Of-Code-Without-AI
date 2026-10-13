@@ -1,0 +1,10 @@
+1.useMemo — Remember a result
+Problem: A calculation runs again every time a component renders, even when its inputs haven't changed.
+Solution: useMemo remembers the previous result and recalculates only when its dependencies change.
+Example from NoteSpace: remembering the filtered notes until notes or search changes.
+2. React.memo — Skip an unnecessary child render
+Problem: A parent renders again, causing its child to render again even though the child's props haven't changed.
+Solution: React.memo lets React skip rendering that child when its props are unchanged.
+3. useCallback — Remember a function
+Problem: A function declared inside a parent component gets a new reference on every render. This can make a React.memo child render again.
+Solution: useCallback preserves the function reference while its dependencies remain unchanged.

@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect, useMemo} from 'react'
 import Header from './components/header'
 import AddNote from './components/addNote'
 import Display from './components/displayNotes'
@@ -27,6 +27,8 @@ function settId() {
 function App() {
   const [notes, setNotes] = useState(() => viewStorage())
   const [id, setId] = useState(() => settId())
+  const [search, setSearch] = useState('')
+
 
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes))
@@ -45,13 +47,24 @@ function App() {
   const handleUpdatedNote = (updatedNote) => {
     setNotes(updatedNote)
   }
+
+  const filteredNotes = useMemo(() => {
+        return notes.filter(n => n.title.toLowerCase().includes(search.toLocaleLowerCase()))
+    }, [notes, search])
   
   return (
     <>
       <section className="main">
         <Header />
+        <section className="search">
+            <input type="text" name="search" value={search} onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search ..." />
+        </section>
         <AddNote addNote={addNote} />
-        <Display notes={notes} handleDeleteNote={handleDeleteNote} handleUpdatedNote={handleUpdatedNote} />
+
+       
+      <Display notes={filteredNotes} handleDeleteNote={handleDeleteNote} handleUpdatedNote={handleUpdatedNote} /> 
+      
       </section>
     </>
   )
